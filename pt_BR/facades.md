@@ -10,28 +10,25 @@
 <a name="introduction"></a>
 ## Introdução
 
-Fachadas fornecem uma interface "estática" para classes que estão disponíveis no [container de serviço](/docs/{{version}}/container) das aplicações. Laravel já vem com várias fachadas, e você provavelmente você tem as usado sem ao menos conhece-las! "Fachadas" do Laravel servem como "proxies" para classes subjacentes no container de serviços, fornecendo o benefício de uma sintaxe concisa e expressiva enquanto é mantida mais testável e flexível do que os métodos estáticos tradicionais.
-
-Facades provide a "static" interface to classes that are available in the application's [service container](/docs/{{version}}/container). Laravel ships with many facades, and you have probably been using them without even knowing it! Laravel "facades" serve as "static proxies" to underlying classes in the service container, providing the benefit of a terse, expressive syntax while maintaining more testability and flexibility than traditional static methods.
+Fachadas fornecem uma interface "estática" para classes que estão disponíveis no [container de serviço](/docs/{{version}}/container) das aplicações. Laravel já vem com várias fachadas, e você provavelmente tem as usado sem ao menos conhece-las! "Fachadas" do Laravel servem como "proxies" para classes subjacentes no container de serviços, fornecendo o benefício de uma sintaxe concisa e expressiva enquanto é mantida mais testável e flexível do que os métodos estáticos tradicionais.
 
 Ocasionalmente, você pode desejar criar sua própria fachada para sua aplicação e pacotes, então vamos explorar o conceito de desenvolvimento e uso dessas classes.
 
-> **Nota:** Antes de mergulhar no mundo das fachda, é fortemente recomendado que você se familiarize com o [container de serviços](/docs/{{version}}/container) do Laravel. 
+> **Nota:** Antes de mergulhar no mundo das fachada, é fortemente recomendado que você se familiarize com o [container de serviços](/docs/{{version}}/container) do Laravel. 
 
 <a name="explanation"></a>
 ## Explicação
 
 No contexto da aplicação Laravel, uma fachada é uma classe que forncece acesso para um objeto de um container. Toda a engenharia que faz este trabalho está na classe `Facade`. As fachadas do Laravel, e qualquer outra fachada customizada que você criar, irá extender da classe base `Facade`.
 
-Sua classe fachada apenas necessita implementar um único método `getFacadeAccessor`. É trabalho do método `getFacadeAccessor` definir o que resolver a partir do container. A classe base `Facade` fa uso do método-mágico `__callStatic()` para adiar as chamadas da sua classe fachada para resolver o objeto.
+Sua classe fachada apenas necessita implementar um único método `getFacadeAccessor`. É trabalho do método `getFacadeAccessor` definir o que resolver a partir do container. A classe base `Facade` faz uso do método-mágico `__callStatic()` para adiar as chamadas da sua classe fachada para resolver o objeto.
 
 Então, quando você faz a chamada de uma fachada como por exemplo: `Cache::get`, o Laravel resolve a classe gerenciadora Cache de fora do container de serviços e chama o método `get` da classe. Em termos técnicos, Fachadas Laravel são uma sintaxe conveniente para usar o container de serviços Laravel como um localizador de serviços.
 
 <a name="practical-usage"></a>
 ## Uso Prático
 
-No exemplo abaixo, a chamada é feita para o sistema de cache do Laravel. Ao olhar para este código, pode-se supor que o método estático  `get` é chamado na clsse `Cache`.
-In the example below, a call is made to the Laravel cache system. By glancing at this code, one might assume that the static method `get` is being called on the `Cache` class.
+No exemplo abaixo, a chamada é feita para o sistema de cache do Laravel. Ao olhar para este código, pode-se supor que o método estático  `get` é chamado na classe `Cache`.
 
 	$value = Cache::get('key');
 
@@ -110,7 +107,7 @@ Nos precisamos ser capazes de resolver esta classe a partir do container de serv
 
 Um ótimo lugar para registrar esta ligação seria criando um novo [fornecerdor de serviços](/docs/{{version}}/container#service-providers) chamado `PaymentServiceProvider`, e adicionar esta ligação ao método `register`. Você pode então configurar para que o Laravel carregue seu fornecedor de serviços a partir do arquivo de configuração `config/app.php`.
 
-Após isto, nos podemos criar nosa própria classe fachada:
+Após isto, nos podemos criar nossa própria classe fachada:
 
 
 	use Illuminate\Support\Facades\Facade;
@@ -127,12 +124,13 @@ Finalmente, se quisermos, nos podemos adicionar um alias(apelido) para nossa fac
 
 ### Uma nota sobre auto-loading Aliases (Apelidos auto-carregáveis)
 
-Classes no array `aliases` não estão disponíveis em algumas instâncias por que [PHP não irá tentar carregar automaticamente classes dom tipagens indefinidas](https://bugs.php.net/bug.php?id=39003). Se `\ServiceWrapper\ApiTimeoutException` é apelidado de `ApiTimeoutException`, a exeção `catch(ApiTimeoutException $e)` fora do namespace `\ServiceWrapper` nunca irá entrar na exeção, mesmo se uma for levantada. Um problema similar é encontrado em classes que tem tipagem para classes apelidadas (aliases). A única solução é não usar (aliasing, não apelidar classes) e `usar` as classes que você deseja tipando-as no começo de cada arquivo que as requisita.
+Classes no array `aliases` não estão disponíveis em algumas instâncias por que o [PHP não irá tentar carregar automaticamente classes dom tipagens indefinidas](https://bugs.php.net/bug.php?id=39003). Se `\ServiceWrapper\ApiTimeoutException` é apelidado de `ApiTimeoutException`, a exeção `catch(ApiTimeoutException $e)` fora do namespace `\ServiceWrapper` nunca irá entrar na exeção, mesmo se uma for levantada. Um problema similar é encontrado em classes que tem tipagem para classes apelidadas (aliases). A única solução é não usar (aliasing, não apelidar classes) e `usar` as classes que você deseja tipando-as no começo de cada arquivo que as requisita.
 
 <a name="mocking-facades"></a>
 ## Imitando Fachadas (Mocking)
 
-Teste unitário é importante aspecto do porque fachadas funcionam do jeito que são. Na verdade, testabilidade é a razão primária para fahadas sequer existam. Para mais informações, dê uma olhada na seção de documentação [imitando fachadas](/docs/testing#mocking-facades) 
+
+Teste unitário é um importante aspecto que influência no motivo para que as fachadas funciorem do jeito que são. Na verdade, capacidade de teste é a razão primária para fachadas existam. Para mais informações, dê uma olhada na seção de documentação [imitando fachadas](/docs/testing#mocking-facades) 
 
 <a name="facade-class-reference"></a>
 ## Referências de Classe Fachada
