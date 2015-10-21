@@ -23,7 +23,7 @@
 <a name="introduction"></a>
 ## Introdução
 
-Laravel faz implementação de autenticação de forma muito simples. De fato, quase tudo é configurado automagicamente para você. O arquivo onde é setado as configurações está em `config/auth.php`, onde contém várias opções bem documentadas para melhorar o comportamento dos serviços de autenticação.
+Laravel faz implementação de autenticação de forma muito simples. De fato, quase tudo é configurado automaticamente para você. O arquivo onde é setado as configurações está em `config/auth.php`, onde contém várias opções bem documentadas para melhorar o comportamento dos serviços de autenticação.
 
 ### Considerações de Banco de Dados
 
